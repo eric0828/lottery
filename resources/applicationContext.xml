@@ -12,7 +12,7 @@
 
     <context:property-placeholder location="classpath*:/lottery.properties"/>
 
-    <!--<context:component-scan base-package="com.lottery"/>-->
+    <context:component-scan base-package="com.lottery"/>
 
     <!-- 使用 annotation -->
     <context:annotation-config />

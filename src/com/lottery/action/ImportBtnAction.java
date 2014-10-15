@@ -1,6 +1,7 @@
 package com.lottery.action;
 
 import com.lottery.model.LotteryAll;
+import com.lottery.model.LotteryAny;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -63,14 +64,14 @@ public class ImportBtnAction implements ActionListener {
         try {
             List<String> lines = FileUtils.readLines(file);
 
-            List<LotteryAll> lotteryAlls = new ArrayList<LotteryAll>();
+            List<LotteryAny> lotteryAnys = new ArrayList<LotteryAny>();
             for (String line : lines) {
-                LotteryAll lotteryAll = new LotteryAll();
+                LotteryAny lotteryAny = new LotteryAny();
 
-                lotteryAlls.add(lotteryAll);
+                lotteryAnys.add(lotteryAny);
             }
 
-            //TODO 保存 lotteryAlls
+            //TODO 保存 lotteryAnys
 
 
         } catch (IOException e) {

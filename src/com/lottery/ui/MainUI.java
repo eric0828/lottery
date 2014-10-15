@@ -1,6 +1,7 @@
 package com.lottery.ui;
 
 import com.lottery.action.ImportBtnAction;
+import com.lottery.action.InitDataAction;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -34,21 +35,22 @@ public class MainUI extends JFrame {
      * Create the frame.
      */
     public MainUI() {
-        setTitle("\u5927\u4E50\u900F\u5206\u6790\u7CFB\u7EDF");
+        setTitle("大乐透分析系统");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
 
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
-        JMenu mnNewMenu = new JMenu("\u6587\u4EF6");
+        JMenu mnNewMenu = new JMenu("文 件");
         menuBar.add(mnNewMenu);
 
-        JMenuItem menuItem = new JMenuItem("\u5BFC\u5165\u6570\u636E");
+        JMenuItem menuItem = new JMenuItem("导入数据");
         mnNewMenu.add(menuItem);
 
-        JMenuItem menuItem_1 = new JMenuItem("\u9000\u51FA");
+        JMenuItem menuItem_1 = new JMenuItem("退 出");
         mnNewMenu.add(menuItem_1);
+
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(new BorderLayout(0, 0));
@@ -58,17 +60,22 @@ public class MainUI extends JFrame {
         toolBar.setEnabled(false);
         contentPane.add(toolBar, BorderLayout.NORTH);
 
-        JButton importBtn = new JButton("\u5BFC\u5165\u6570\u636E");
+        JButton initBtn = new JButton("初始化数据");
+        initBtn.addActionListener(new InitDataAction());
+        initBtn.setPreferredSize(new Dimension(100, 30));
+        toolBar.add(initBtn);
+
+        JButton importBtn = new JButton("导入数据");
         importBtn.addActionListener(new ImportBtnAction());
-        importBtn.setPreferredSize(new Dimension(60, 30));
+        importBtn.setPreferredSize(new Dimension(80, 30));
         toolBar.add(importBtn);
 
         JComboBox<Object> comboBox_1 = new JComboBox<Object>();
-        comboBox_1.setPreferredSize(new Dimension(400, 30));
+        comboBox_1.setPreferredSize(new Dimension(350, 30));
         toolBar.add(comboBox_1);
 
         JComboBox<Object> comboBox = new JComboBox<Object>();
-        comboBox.setPreferredSize(new Dimension(400, 30));
+        comboBox.setPreferredSize(new Dimension(350, 30));
         toolBar.add(comboBox);
     }
 

@@ -13,4 +13,5 @@ import com.lottery.dao.LotteryAnyDao;
 public class LotteryAnyService {
 	@Autowired
 	private LotteryAnyDao lotteryAnyDao;
+
 }
