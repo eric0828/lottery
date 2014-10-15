@@ -9,7 +9,8 @@ import java.awt.*;
 
 public class MainUI extends JFrame {
 
-    private JPanel contentPane;
+	private static final long serialVersionUID = -2089179114014597392L;
+	private JPanel contentPane;
 
     /**
      * Launch the application.
@@ -62,11 +63,11 @@ public class MainUI extends JFrame {
         importBtn.setPreferredSize(new Dimension(60, 30));
         toolBar.add(importBtn);
 
-        JComboBox comboBox_1 = new JComboBox();
+        JComboBox<Object> comboBox_1 = new JComboBox<Object>();
         comboBox_1.setPreferredSize(new Dimension(400, 30));
         toolBar.add(comboBox_1);
 
-        JComboBox comboBox = new JComboBox();
+        JComboBox<Object> comboBox = new JComboBox<Object>();
         comboBox.setPreferredSize(new Dimension(400, 30));
         toolBar.add(comboBox);
     }
