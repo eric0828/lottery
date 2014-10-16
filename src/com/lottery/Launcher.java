@@ -1,6 +1,6 @@
 package com.lottery;
 
-import org.springframework.context.annotation.ComponentScan;
+import com.lottery.common.SpringBeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -9,11 +9,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Launcher {
 
     @SuppressWarnings("resource")
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
         String contextPath[] = new String[]{"applicationContext.xml"};
-        new ClassPathXmlApplicationContext(contextPath);
-
+        SpringBeanFactory.getInstance().setApplicationContext(new ClassPathXmlApplicationContext(contextPath));
     }
 
 }

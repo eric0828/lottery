@@ -1,6 +1,5 @@
 package com.lottery.action;
 
-import com.lottery.model.LotteryAll;
 import com.lottery.model.LotteryAny;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -56,7 +55,6 @@ public class ImportBtnAction implements ActionListener {
     }
 
     /**
-     *
      * @param file
      */
     private void processImport(File file) {

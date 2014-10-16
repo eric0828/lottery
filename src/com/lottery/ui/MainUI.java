@@ -1,5 +1,6 @@
 package com.lottery.ui;
 
+import com.lottery.action.ExitAction;
 import com.lottery.action.ImportBtnAction;
 import com.lottery.action.InitDataAction;
 
@@ -10,8 +11,8 @@ import java.awt.*;
 
 public class MainUI extends JFrame {
 
-	private static final long serialVersionUID = -2089179114014597392L;
-	private JPanel contentPane;
+    private static final long serialVersionUID = -2089179114014597392L;
+    private JPanel contentPane;
 
     /**
      * Launch the application.
@@ -50,6 +51,7 @@ public class MainUI extends JFrame {
 
         JMenuItem menuItem_1 = new JMenuItem("ÍË ³ö");
         mnNewMenu.add(menuItem_1);
+        menuItem_1.addActionListener(new ExitAction(this));
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

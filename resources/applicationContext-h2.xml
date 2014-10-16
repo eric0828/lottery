@@ -9,31 +9,35 @@
             http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <bean id="h2DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <property name="driverClass" value="${h2.jdbc.driver}" />
-        <property name="jdbcUrl" value="${h2.jdbc.url}" />
-        <property name="user" value="${h2.jdbc.username}" />
-        <property name="password" value="${h2.jdbc.password}" />
-        <property name="initialPoolSize" value="${connection_pools.initial_pool_size}" />
-        <property name="minPoolSize" value="${connection_pools.min_pool_size}" />
-        <property name="maxPoolSize" value="${connection_pools.max_pool_size}" />
-        <property name="maxIdleTime" value="${connection_pools.max_idle_time}" />
-        <property name="acquireIncrement" value="${connection_pools.acquire_increment}" />
-        <property name="checkoutTimeout" value="${connection_pools.checkout_timeout}" />
+        <property name="driverClass" value="${h2.jdbc.driver}"/>
+        <property name="jdbcUrl" value="${h2.jdbc.url}"/>
+        <property name="user" value="${h2.jdbc.username}"/>
+        <property name="password" value="${h2.jdbc.password}"/>
+        <property name="initialPoolSize" value="${connection_pools.initial_pool_size}"/>
+        <property name="minPoolSize" value="${connection_pools.min_pool_size}"/>
+        <property name="maxPoolSize" value="${connection_pools.max_pool_size}"/>
+        <property name="maxIdleTime" value="${connection_pools.max_idle_time}"/>
+        <property name="acquireIncrement" value="${connection_pools.acquire_increment}"/>
+        <property name="checkoutTimeout" value="${connection_pools.checkout_timeout}"/>
     </bean>
 
     <!-- 配置sessionFactory -->
     <bean id="h2SessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="h2DataSource"/>
-        <property name="packagesToScan" value="com.lottery"/>
+        <property name="packagesToScan" value="com.lottery.model"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${h2.hibernate.dialect}</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.jdbc.fetch_size">10</prop>
                 <prop key="hibernate.jdbc.batch_size">30</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
+                <prop key="hibernate.cache.use_query_cache">false</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
                 <!--<prop key="hibernate.query.factory_class">org.hibernate.hql.ast.ASTQueryTranslatorFactory</prop>-->
-                <!-- <prop key="hibernate.hbm2ddl.auto">update</prop>  -->
             </props>
         </property>
     </bean>

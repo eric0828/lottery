@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author houyi
  *
  */
-@Service
+@Service("lotteryAllService")
 public class LotteryAllService {
 	@Autowired
 	private LotteryAllDao lotteryAllDao;
