@@ -36,20 +36,20 @@ public class MainUI extends JFrame {
      * Create the frame.
      */
     public MainUI() {
-        setTitle("´óÀÖÍ¸·ÖÎöÏµÍ³");
+        setTitle("å¤§ä¹é€åˆ†æç³»ç»Ÿ");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
 
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
-        JMenu mnNewMenu = new JMenu("ÎÄ ¼ş");
+        JMenu mnNewMenu = new JMenu("æ–‡ ä»¶");
         menuBar.add(mnNewMenu);
 
-        JMenuItem menuItem = new JMenuItem("µ¼ÈëÊı¾İ");
+        JMenuItem menuItem = new JMenuItem("å¯¼å…¥æ•°æ®");
         mnNewMenu.add(menuItem);
 
-        JMenuItem menuItem_1 = new JMenuItem("ÍË ³ö");
+        JMenuItem menuItem_1 = new JMenuItem("é€€ å‡º");
         mnNewMenu.add(menuItem_1);
         menuItem_1.addActionListener(new ExitAction(this));
 
@@ -62,12 +62,12 @@ public class MainUI extends JFrame {
         toolBar.setEnabled(false);
         contentPane.add(toolBar, BorderLayout.NORTH);
 
-        JButton initBtn = new JButton("³õÊ¼»¯Êı¾İ");
+        JButton initBtn = new JButton("åˆå§‹åŒ–æ•°æ®");
         initBtn.addActionListener(new InitDataAction());
         initBtn.setPreferredSize(new Dimension(100, 30));
         toolBar.add(initBtn);
 
-        JButton importBtn = new JButton("µ¼ÈëÊı¾İ");
+        JButton importBtn = new JButton("å¯¼å…¥æ•°æ®");
         importBtn.addActionListener(new ImportBtnAction());
         importBtn.setPreferredSize(new Dimension(80, 30));
         toolBar.add(importBtn);
