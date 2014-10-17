@@ -14,7 +14,7 @@ import com.lottery.dao.hibernate3.BussinessEntity;
  */
 @Entity
 @Table(name = "LOTTERY_ALL")
-public class LotteryAll extends BussinessEntity{
+public class LotteryAll extends BussinessEntity {
 
 	private static final long serialVersionUID = 5934041630191412511L;
 
@@ -33,9 +33,9 @@ public class LotteryAll extends BussinessEntity{
 	@Column(name = "FRONT_FIVE")
 	private Integer front_five;
 
-	@Column(name = "STATUS")
+	@Column(name = "STATUS", length = 1)
 	private String status;
-	
+
 	@OneToMany(mappedBy = "lotteryAll")
 	private List<LotteryAny> lotteryAnys;
 

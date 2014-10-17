@@ -45,7 +45,7 @@ public class LotteryAny extends BussinessEntity {
 
 	@Column(name = "CREATED_DATE")
 	private Date created_date;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "LOTTERY_ID")
 	private LotteryAll lotteryAll;
