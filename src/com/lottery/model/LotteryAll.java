@@ -87,4 +87,11 @@ public class LotteryAll extends BussinessEntity {
 		this.status = status;
 	}
 
+    public List<LotteryAny> getLotteryAnys() {
+        return lotteryAnys;
+    }
+
+    public void setLotteryAnys(List<LotteryAny> lotteryAnys) {
+        this.lotteryAnys = lotteryAnys;
+    }
 }

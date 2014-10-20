@@ -1,6 +1,8 @@
 package com.lottery.dao.hibernate3;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +33,17 @@ public class SimpleHibernateDao<T, PK extends Serializable> extends HibernateDao
 	}
 
 	public SimpleHibernateDao() {
-		this.entityClass = (Class<T>) Object.class;
+        Type genType = getClass().getGenericSuperclass();
+        if (!(genType instanceof ParameterizedType)) {
+            logger.warn(getClass().getSimpleName() + "'s superclass not ParameterizedType");
+            this.entityClass = (Class<T>) Object.class;
+        }
+        Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
+        if (!(params[0] instanceof Class)) {
+            logger.warn(getClass().getSimpleName() + " not set the actual class on superclass generic parameter");
+            this.entityClass = (Class<T>) Object.class;
+        }
+		this.entityClass = (Class) params[0];
 	}
 
 	public SimpleHibernateDao(final SessionFactory sessionFactory, final Class<T> entityClass) {

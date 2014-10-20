@@ -122,4 +122,11 @@ public class LotteryAny extends BussinessEntity {
 		this.created_date = created_date;
 	}
 
+    public LotteryAll getLotteryAll() {
+        return lotteryAll;
+    }
+
+    public void setLotteryAll(LotteryAll lotteryAll) {
+        this.lotteryAll = lotteryAll;
+    }
 }
