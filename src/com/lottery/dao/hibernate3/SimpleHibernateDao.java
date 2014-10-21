@@ -43,7 +43,7 @@ public class SimpleHibernateDao<T, PK extends Serializable> extends HibernateDao
             logger.warn(getClass().getSimpleName() + " not set the actual class on superclass generic parameter");
             this.entityClass = (Class<T>) Object.class;
         }
-		this.entityClass = (Class) params[0];
+		this.entityClass = (Class<T>) params[0];
 	}
 
 	public SimpleHibernateDao(final SessionFactory sessionFactory, final Class<T> entityClass) {
