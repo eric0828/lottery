@@ -4,6 +4,7 @@ import com.lottery.action.ExitAction;
 import com.lottery.action.ImportLotteryAllAction;
 import com.lottery.action.ImportLotteryAnyAction;
 import com.lottery.common.SpringBeanFactory;
+import com.lottery.component.CrystalImageButton;
 import com.lottery.component.MemoryPanel;
 import com.lottery.component.ProgressPanel;
 import com.lottery.service.LotteryAllService;
@@ -114,13 +115,15 @@ public class MainUI extends JFrame {
         memoryPanel.setMinimumSize(new Dimension(100, 15));
         memoryStatusPanel.add(memoryPanel);
 
-        JButton gcButton = new JButton("");
+        CrystalImageButton gcButton = new CrystalImageButton("");
+        gcButton.setPreferredSize(new Dimension(30, 30));
         gcButton.setToolTipText("À¬»ø»ØÊÕ");
         URL url = getClass().getResource("/icons/trash.png");
+        gcButton.setFrameType(CrystalImageButton.FRAME_AROUND);
         if(url != null){
-            gcButton.setIcon(new ImageIcon(url));
+            gcButton.setImage(new ImageIcon(url).getImage());
         }
-        gcButton.setPreferredSize(new Dimension(25, 25));
+
         memoryStatusPanel.add(gcButton);
         gcButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

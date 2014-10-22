@@ -1,42 +1,53 @@
 package com.lottery.component;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 
-import javax.swing.JComponent;
-
-public class ProgressPanel extends JComponent implements MouseListener
-{
-    /** Contains the bars composing the circular shape. */
-    protected Area[]  ticker     = null;
-    /** The animation thread is responsible for fade in/out and rotation. */
-    protected Thread  animation  = null;
-    /** Notifies whether the animation is running or not. */
-    protected boolean started    = false;
-    /** Alpha level of the veil, used for fade in/out. */
-    protected int     alphaLevel = 0;
-    /** Duration of the veil's fade in/out. */
-    protected int     rampDelay  = 300;
-    /** Alpha level of the veil. */
-    protected float   shield     = 0.70f;
-    /** Message displayed below the circular shape. */
-    protected String  text       = "";
-    /** Amount of bars composing the circular shape. */
-    protected int     barsCount  = 14;
-    /** Amount of frames per seconde. Lowers this to save CPU. */
-    protected float   fps        = 15.0f;
-    /** Rendering hints to set anti aliasing. */
+public class ProgressPanel extends JComponent implements MouseListener {
+    /**
+     * Contains the bars composing the circular shape.
+     */
+    protected Area[] ticker = null;
+    /**
+     * The animation thread is responsible for fade in/out and rotation.
+     */
+    protected Thread animation = null;
+    /**
+     * Notifies whether the animation is running or not.
+     */
+    protected boolean started = false;
+    /**
+     * Alpha level of the veil, used for fade in/out.
+     */
+    protected int alphaLevel = 0;
+    /**
+     * Duration of the veil's fade in/out.
+     */
+    protected int rampDelay = 300;
+    /**
+     * Alpha level of the veil.
+     */
+    protected float shield = 0.70f;
+    /**
+     * Message displayed below the circular shape.
+     */
+    protected String text = "";
+    /**
+     * Amount of bars composing the circular shape.
+     */
+    protected int barsCount = 14;
+    /**
+     * Amount of frames per seconde. Lowers this to save CPU.
+     */
+    protected float fps = 15.0f;
+    /**
+     * Rendering hints to set anti aliasing.
+     */
     protected RenderingHints hints = null;
 
     /**
@@ -49,8 +60,7 @@ public class ProgressPanel extends JComponent implements MouseListener
      * <li>Fade in/out last 300 ms</li>
      * </ul>
      */
-    public ProgressPanel()
-    {
+    public ProgressPanel() {
         this("");
     }
 
@@ -62,10 +72,10 @@ public class ProgressPanel extends JComponent implements MouseListener
      * <li>15 frames per second</li>
      * <li>Fade in/out last 300 ms</li>
      * </ul>
+     *
      * @param text The message to be displayed. Can be null or empty.
      */
-    public ProgressPanel(String text)
-    {
+    public ProgressPanel(String text) {
         this(text, 14);
     }
 
@@ -76,11 +86,11 @@ public class ProgressPanel extends JComponent implements MouseListener
      * <li>15 frames per second</li>
      * <li>Fade in/out last 300 ms</li>
      * </ul>
-     * @param text The message to be displayed. Can be null or empty.
+     *
+     * @param text      The message to be displayed. Can be null or empty.
      * @param barsCount The amount of bars composing the circular shape
      */
-    public ProgressPanel(String text, int barsCount)
-    {
+    public ProgressPanel(String text, int barsCount) {
         this(text, barsCount, 0.70f);
     }
 
@@ -90,13 +100,13 @@ public class ProgressPanel extends JComponent implements MouseListener
      * <li>15 frames per second</li>
      * <li>Fade in/out last 300 ms</li>
      * </ul>
-     * @param text The message to be displayed. Can be null or empty.
+     *
+     * @param text      The message to be displayed. Can be null or empty.
      * @param barsCount The amount of bars composing the circular shape.
-     * @param shield The alpha level between 0.0 and 1.0 of the colored
-     *               shield (or veil).
+     * @param shield    The alpha level between 0.0 and 1.0 of the colored
+     *                  shield (or veil).
      */
-    public ProgressPanel(String text, int barsCount, float shield)
-    {
+    public ProgressPanel(String text, int barsCount, float shield) {
         this(text, barsCount, shield, 15.0f);
     }
 
@@ -105,35 +115,35 @@ public class ProgressPanel extends JComponent implements MouseListener
      * <ul>
      * <li>Fade in/out last 300 ms</li>
      * </ul>
-     * @param text The message to be displayed. Can be null or empty.
+     *
+     * @param text      The message to be displayed. Can be null or empty.
      * @param barsCount The amount of bars composing the circular shape.
-     * @param shield The alpha level between 0.0 and 1.0 of the colored
-     *               shield (or veil).
-     * @param fps The number of frames per second. Lower this value to
-     *            decrease CPU usage.
+     * @param shield    The alpha level between 0.0 and 1.0 of the colored
+     *                  shield (or veil).
+     * @param fps       The number of frames per second. Lower this value to
+     *                  decrease CPU usage.
      */
-    public ProgressPanel(String text, int barsCount, float shield, float fps)
-    {
+    public ProgressPanel(String text, int barsCount, float shield, float fps) {
         this(text, barsCount, shield, fps, 300);
     }
 
     /**
      * Creates a new progress panel.
-     * @param text The message to be displayed. Can be null or empty.
+     *
+     * @param text      The message to be displayed. Can be null or empty.
      * @param barsCount The amount of bars composing the circular shape.
-     * @param shield The alpha level between 0.0 and 1.0 of the colored
-     *               shield (or veil).
-     * @param fps The number of frames per second. Lower this value to
-     *            decrease CPU usage.
+     * @param shield    The alpha level between 0.0 and 1.0 of the colored
+     *                  shield (or veil).
+     * @param fps       The number of frames per second. Lower this value to
+     *                  decrease CPU usage.
      * @param rampDelay The duration, in milli seconds, of the fade in and
      *                  the fade out of the veil.
      */
-    public ProgressPanel(String text, int barsCount, float shield, float fps, int rampDelay)
-    {
-        this.text 	   = text;
+    public ProgressPanel(String text, int barsCount, float shield, float fps, int rampDelay) {
+        this.text = text;
         this.rampDelay = rampDelay >= 0 ? rampDelay : 0;
-        this.shield    = shield >= 0.0f ? shield : 0.0f;
-        this.fps       = fps > 0.0f ? fps : 15.0f;
+        this.shield = shield >= 0.0f ? shield : 0.0f;
+        this.fps = fps > 0.0f ? fps : 15.0f;
         this.barsCount = barsCount > 0 ? barsCount : 14;
 
         this.hints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
@@ -146,8 +156,7 @@ public class ProgressPanel extends JComponent implements MouseListener
      *
      * @param text The message to be displayed. Can be null or empty.
      */
-    public void setText(String text)
-    {
+    public void setText(String text) {
         this.text = text;
         repaint();
     }
@@ -155,8 +164,7 @@ public class ProgressPanel extends JComponent implements MouseListener
     /**
      * Returns the current displayed message.
      */
-    public String getText()
-    {
+    public String getText() {
         return text;
     }
 
@@ -165,8 +173,7 @@ public class ProgressPanel extends JComponent implements MouseListener
      * rotating the shapes. This method handles the visibility
      * of the glass pane.
      */
-    public void start()
-    {
+    public void start() {
         addMouseListener(this);
         setVisible(true);
         ticker = buildTicker();
@@ -179,24 +186,22 @@ public class ProgressPanel extends JComponent implements MouseListener
      * of the circular shape and then by fading out the veil.
      * This methods sets the panel invisible at the end.
      */
-    public void stop()
-    {
+    public void stop() {
         if (animation != null) {
-	        animation.interrupt();
-	        animation = null;
-	        animation = new Thread(new Animator(false));
-	        animation.start();
+            animation.interrupt();
+            animation = null;
+            animation = new Thread(new Animator(false));
+            animation.start();
         }
     }
-    
+
     /**
      * Interrupts the animation, whatever its state is. You
      * can use it when you need to stop the animation without
      * running the fade out phase.
      * This methods sets the panel invisible at the end.
      */
-    public void interrupt()
-    {
+    public void interrupt() {
         if (animation != null) {
             animation.interrupt();
             animation = null;
@@ -206,23 +211,20 @@ public class ProgressPanel extends JComponent implements MouseListener
         }
     }
 
-    public void paintComponent(Graphics g)
-    {
-        if (started)
-        {
-            int width  = getWidth();
+    public void paintComponent(Graphics g) {
+        if (started) {
+            int width = getWidth();
             int height = getHeight();
 
-            double maxY = 0.0; 
+            double maxY = 0.0;
 
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHints(hints);
-            
+
             g2.setColor(new Color(255, 255, 255, (int) (alphaLevel * shield)));
             g2.fillRect(0, 0, getWidth(), getHeight());
 
-            for (int i = 0; i < ticker.length; i++)
-            {
+            for (int i = 0; i < ticker.length; i++) {
                 int channel = 224 - 128 / (i + 1);
                 g2.setColor(new Color(channel, channel, channel, alphaLevel));
                 g2.fill(ticker[i]);
@@ -232,14 +234,13 @@ public class ProgressPanel extends JComponent implements MouseListener
                     maxY = bounds.getMaxY();
             }
 
-            if (text != null && text.length() > 0)
-            {
-	            FontRenderContext context = g2.getFontRenderContext();
-	            TextLayout layout = new TextLayout(text, getFont(), context);
-	            Rectangle2D bounds = layout.getBounds();
-	            g2.setColor(getForeground());
-	            layout.draw(g2, (float) (width - bounds.getWidth()) / 2,
-	                    		(float) (maxY + layout.getLeading() + 2 * layout.getAscent()));
+            if (text != null && text.length() > 0) {
+                FontRenderContext context = g2.getFontRenderContext();
+                TextLayout layout = new TextLayout(text, getFont(), context);
+                Rectangle2D bounds = layout.getBounds();
+                g2.setColor(getForeground());
+                layout.draw(g2, (float) (width - bounds.getWidth()) / 2,
+                        (float) (maxY + layout.getLeading() + 2 * layout.getAscent()));
             }
         }
     }
@@ -249,14 +250,12 @@ public class ProgressPanel extends JComponent implements MouseListener
      * <code>Area</code>. Each <code>Area</code> is one of the bars
      * composing the shape.
      */
-    private Area[] buildTicker()
-    {
+    private Area[] buildTicker() {
         Area[] ticker = new Area[barsCount];
         Point2D.Double center = new Point2D.Double((double) getWidth() / 2, (double) getHeight() / 2);
         double fixedAngle = 2.0 * Math.PI / ((double) barsCount);
 
-        for (double i = 0.0; i < (double) barsCount; i++)
-        {
+        for (double i = 0.0; i < (double) barsCount; i++) {
             Area primitive = buildPrimitive();
 
             AffineTransform toCenter = AffineTransform.getTranslateInstance(center.getX(), center.getY());
@@ -269,7 +268,7 @@ public class ProgressPanel extends JComponent implements MouseListener
 
             primitive.transform(toWheel);
             primitive.transform(toCircle);
-            
+
             ticker[(int) i] = primitive;
         }
 
@@ -279,11 +278,10 @@ public class ProgressPanel extends JComponent implements MouseListener
     /**
      * Builds a bar.
      */
-    private Area buildPrimitive()
-    {
+    private Area buildPrimitive() {
         Rectangle2D.Double body = new Rectangle2D.Double(6, 0, 30, 12);
-        Ellipse2D.Double   head = new Ellipse2D.Double(0, 0, 12, 12);
-        Ellipse2D.Double   tail = new Ellipse2D.Double(30, 0, 12, 12);
+        Ellipse2D.Double head = new Ellipse2D.Double(0, 0, 12, 12);
+        Ellipse2D.Double tail = new Ellipse2D.Double(30, 0, 12, 12);
 
         Area tick = new Area(body);
         tick.add(new Area(head));
@@ -295,21 +293,18 @@ public class ProgressPanel extends JComponent implements MouseListener
     /**
      * Animation thread.
      */
-    private class Animator implements Runnable
-    {
+    private class Animator implements Runnable {
         private boolean rampUp = true;
 
-        protected Animator(boolean rampUp)
-        {
+        protected Animator(boolean rampUp) {
             this.rampUp = rampUp;
         }
 
-        public void run()
-        {
+        public void run() {
             Point2D.Double center = new Point2D.Double((double) getWidth() / 2, (double) getHeight() / 2);
             double fixedIncrement = 2.0 * Math.PI / ((double) barsCount);
             AffineTransform toCircle = AffineTransform.getRotateInstance(fixedIncrement, center.getX(), center.getY());
-    
+
             long start = System.currentTimeMillis();
             if (rampDelay == 0)
                 alphaLevel = rampUp ? 255 : 0;
@@ -317,38 +312,31 @@ public class ProgressPanel extends JComponent implements MouseListener
             started = true;
             boolean inRamp = rampUp;
 
-            while (!Thread.interrupted())
-            {
-                if (!inRamp)
-                {
+            while (!Thread.interrupted()) {
+                if (!inRamp) {
                     for (int i = 0; i < ticker.length; i++)
                         ticker[i].transform(toCircle);
                 }
 
                 repaint();
 
-                if (rampUp)
-                {
-                    if (alphaLevel < 255)
-                    {
+                if (rampUp) {
+                    if (alphaLevel < 255) {
                         alphaLevel = (int) (255 * (System.currentTimeMillis() - start) / rampDelay);
-                        if (alphaLevel >= 255)
-                        {
+                        if (alphaLevel >= 255) {
                             alphaLevel = 255;
                             inRamp = false;
                         }
                     }
                 } else if (alphaLevel > 0) {
                     alphaLevel = (int) (255 - (255 * (System.currentTimeMillis() - start) / rampDelay));
-                    if (alphaLevel <= 0)
-                    {
+                    if (alphaLevel <= 0) {
                         alphaLevel = 0;
                         break;
                     }
                 }
 
-                try
-                {
+                try {
                     Thread.sleep(inRamp ? 10 : (int) (1000 / fps));
                 } catch (InterruptedException ie) {
                     break;
@@ -356,8 +344,7 @@ public class ProgressPanel extends JComponent implements MouseListener
                 Thread.yield();
             }
 
-            if (!rampUp)
-            {
+            if (!rampUp) {
                 started = false;
                 repaint();
 
