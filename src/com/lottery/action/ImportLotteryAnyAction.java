@@ -1,6 +1,7 @@
 package com.lottery.action;
 
 import com.lottery.common.SpringBeanFactory;
+import com.lottery.component.ProgressPanel;
 import com.lottery.model.LotteryAny;
 import com.lottery.service.LotteryAnyService;
 import org.apache.commons.io.FileUtils;
@@ -8,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -20,6 +22,14 @@ import java.util.List;
  * Created by mmzz on 2014/10/7.
  */
 public class ImportLotteryAnyAction implements ActionListener {
+
+    private ProgressPanel progressPanel;
+    private Frame frame;
+
+    public ImportLotteryAnyAction(Frame frame, ProgressPanel progressPanel) {
+        this.frame = frame;
+        this.progressPanel = progressPanel;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -52,8 +62,16 @@ public class ImportLotteryAnyAction implements ActionListener {
         if (state == 1) {
             return;
         } else {
-            File file = fileChooser.getSelectedFile();
-            processImport(file);
+            final File file = fileChooser.getSelectedFile();
+            progressPanel.start();
+            Thread performer = new Thread(new Runnable() {
+                public void run() {
+                    processImport(file);
+                    progressPanel.stop();
+                    JOptionPane.showMessageDialog(frame, "导入中奖数据成功！", "系统消息", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }, "导入中奖数据");
+            performer.start();
         }
 
     }

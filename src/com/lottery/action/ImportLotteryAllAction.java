@@ -1,5 +1,6 @@
 package com.lottery.action;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -7,9 +8,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFileChooser;
+import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 
+import com.lottery.component.ProgressPanel;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -22,7 +24,15 @@ import com.lottery.service.LotteryAllService;
  */
 public class ImportLotteryAllAction implements ActionListener {
 
-	@Override
+    private ProgressPanel progressPanel;
+    private Frame frame;
+
+    public ImportLotteryAllAction(Frame frame, ProgressPanel progressPanel) {
+        this.frame = frame;
+        this.progressPanel = progressPanel;
+    }
+
+    @Override
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -53,8 +63,16 @@ public class ImportLotteryAllAction implements ActionListener {
 		if (state == 1) {
 			return;
 		} else {
-			File file = fileChooser.getSelectedFile();
-			processImport(file);
+			final File file = fileChooser.getSelectedFile();
+            progressPanel.start();
+            Thread performer = new Thread(new Runnable() {
+                public void run() {
+                    processImport(file);
+                    progressPanel.stop();
+                    JOptionPane.showMessageDialog(frame, "导入全排列数据成功！", "系统消息", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }, "导入全排列数据");
+            performer.start();
 		}
 
 	}
